@@ -428,3 +428,70 @@ villain_1.kill(Vasya)
 print(Vasya.health)
 
 
+
+###########################################################
+#43. Множественное наследование
+############################################################
+class Swimmable:
+    def __init__(self, name):
+        print('Method init() of Swimmable')
+        self.name = name
+
+    def greeting(self):
+        print(f'Hello! My name is {self.name} and I can swim')
+
+    def swim(self):
+        print(f'I\'m swimming')
+
+class Walkable:
+    def __init__(self, name):
+        print('Method init() of Walkable')
+        self.name = name
+
+    def greeting(self):
+        print(f'Hello! My name is {self.name} and I can work')
+
+    def walk(self):
+        print(f'I\'m walking')
+
+
+class Flyable:
+    def __init__(self, name):
+        print('Method init() of Flyable')
+        self.name = name
+
+    def greeting(self):
+        print(f'Hello! My name is {self.name} and I can fly')
+
+    def fly(self):
+        print(f'I\'m flying')
+
+class GameCharacter(Walkable, Swimmable, Flyable):
+    def __init__(self, name):
+        print('Method init() of GameCharacter')
+        self.name = name
+        Swimmable.__init__(self, name)
+        Flyable.__init__(self, name)
+        Walkable.__init__(self, name)
+
+
+
+james = GameCharacter('James')
+james.greeting()
+james.fly()
+james.walk()
+james.swim()
+
+print(isinstance(james, Walkable))
+print(isinstance(james, Flyable))
+print(isinstance(james, Swimmable))
+print(isinstance(james, GameCharacter))
+print(isinstance(james, dict))
+print(isinstance(james, object))
+
+
+
+
+###########################################################
+#44. Method Resolution Order (MRO)
+############################################################
