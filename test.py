@@ -428,3 +428,272 @@ villain_1.kill(Vasya)
 print(Vasya.health)
 
 
+
+
+##########################################
+#46. Встроенные модули
+##########################################
+print('46. Встроенные модули')
+
+#variant #1 импорт всего модуля
+import random
+x = random.randint(1,10)
+print(x)
+
+#variant #2 импорт только функции из модуля
+from random import randint
+x = randint(1,10)
+print(x)
+
+#variant #3 импорт функции подсвоим именем
+from random import shuffle as shuffle_my_list
+my_list = [1,2,3]
+shuffle_my_list(my_list)
+print(my_list)
+
+# Вопросы к этому заданию
+# Импортируйте встроенный модуль math. Вычислите при помощи функций этого модуля:
+# 1. Корень квадратный из числа 123456789
+# 2. Факториал числа 987
+# 3. 876 в степени 54
+
+import math
+x = math.sqrt(123456789)
+print(x)
+
+y = math.factorial(987)
+print(y)
+
+z = math.pow(876, 54)
+print(z)
+
+
+
+
+###################################
+#47. Создание своих модулей
+#################################
+print('47. Создание своих модулей')
+from goodbyes import say_goodbye as my_good_bye
+import greetings
+
+
+greetings.say_hello()
+greetings.say_hey_there()
+greetings.say_hi()
+
+my_good_bye()
+my_good_bye()
+
+###################################
+#48. Внешние модулей
+#################################
+print('48. Внешние модулей')
+
+import termcolor
+
+print(termcolor.colored('Hello', 'red', 'on_white'))
+
+###################################
+#49. __name__ and '__main__'
+#################################
+print(termcolor.colored('\n49. __name__ and \'__main__\'', 'red'))
+
+print(1)
+print('string')
+
+print(__name__)
+
+def function1():
+    print('функция 1')
+
+def function2():
+    print('функция 2')
+
+if __name__ == '__main__':
+    function1()
+    function2()
+else:
+    print('блаблабла')
+
+
+###################################
+#50. Чтение текстовых файлов
+#################################
+print(termcolor.colored('\n50. Чтение текстовых файлов', 'red'))
+
+#x = input('Input something')
+#print('Output something ' + x)
+print(1,2,3, sep=':', end='\n')
+print(1,2,3, sep=',', end=' ')
+print(1,2,3, sep=';', end='')
+print('')
+print('')
+
+# loremd = open('ex.txt', 'r')
+# for line in loremd:
+#     print(line, end='')
+# loremd.close()
+
+# loremd = open('ex.txt', 'r')
+# for line in loremd:
+#     if 'let' in line.lower():
+#         print(line, end='')
+# loremd.close()
+
+#второй способ открыть файл с помощью with, не нужно закрывать файл после использования
+# with open('ex.txt', 'r') as lorem:
+#     for line in lorem:
+#         if 'mary' in line.lower():
+#             print(line, end='')
+
+#еще один вариант, readline() читает одну строку
+# with open('ex.txt', 'r') as lorem:
+#     line = lorem.readline()
+#     while line:
+#         print(line, end='')
+#         line = lorem.readline()
+
+#еще один вариант, readlines() читает все строки и записываем строки в список
+with open('ex.txt', 'r') as lorem:
+    lines = lorem.readlines()
+
+for line in lines:
+    print(line, end='')
+
+#в случае больших файлов лучше перебирать построчно с помощью readline()
+
+
+###################################
+#51. Запись текстовых файлов
+#################################
+print(termcolor.colored('\n51. Запись текстовых файлов', 'red'))
+
+
+# запись в документ из списка
+# color_list = ['red', 'yellow', 'indigo', 'black', 'green']
+#
+# with open('ex_write.txt', 'w') as ex_write:
+#     for color in color_list:
+#         print(color, file=ex_write)
+
+# чтение документа
+color_list = []
+with open('ex_write.txt', 'r') as ex_write:
+    for color in ex_write:
+        color_list.append(color.strip('\n'))
+
+print(color_list)
+
+# добавление одной строки в документ
+with open('ex_write.txt', 'a') as ex_write:
+    print('dark green', file=ex_write)
+    print('dark blue', file=ex_write)
+
+
+
+###################################
+#52. Двоичная система счисления
+#################################
+print(termcolor.colored('\n52. Двоичная система счисления', 'red'))
+
+
+#ДЕСЯТИЧНАЯ СИСТЕМА
+x = 127
+print(1 * pow(10,2) + 2 * pow (10, 1) + 7 * pow (10, 0 ))
+
+#ДВОИЧНАЯ СИСТЕМА
+# pow (2, 3) pow(2, 2) pow (2,1) pow(2,0)
+x = 0b101
+print(x)
+print(1 * pow(2, 2) + 0 * pow (2,1) + 1 * pow(2,0))
+
+y = 0b0110 #6
+print(y)
+print(0 * pow(2, 3) + 1 * pow(2, 2) + 1 * pow (2,1) + 0 * pow(2,0))
+
+#ШЕСТНАДТИРИЧНАЯ СИСТЕМА
+
+z = 0xffff
+print(format(z, '0>42b'))
+print(15 * pow (16, 1) + 1 * pow(16, 0))
+print(0b000000000000000000000000001111111111111111)
+
+
+
+
+###################################
+#53. Запись двоичных файлов
+#################################
+print(termcolor.colored('\n53. Запись двоичных файлов', 'red'))
+
+with open('test_binary', 'bw') as test_file:
+    for number in range(21):
+        test_file.write(bytes([number]))
+
+#второй способ по проще
+# with open('test_binary', 'bw') as test_file:
+#     test_file.write(bytes(range(21)))
+
+
+with open('test_binary', 'br') as test_file:
+    for number in test_file:
+        print(number)
+
+###################################
+#54. Модуль pickle (мариновать консервировать)
+#################################
+print(termcolor.colored('\n54. Модуль pickle', 'red'))
+
+import pickle
+
+honda = (
+    'civic',
+    'grey',
+    '2019',
+    (
+        (1, 'James Brown'),
+        (2, 'Jane White'),
+        (3, 'Jake Green'),
+    )
+)
+
+with open('honda.pickle', 'wb') as honda_file:
+    pickle.dump(honda, honda_file)
+
+
+with open('honda.pickle', 'rb') as honda_file:
+    honda_from_file = pickle.load(honda_file)
+
+#print(honda_from_file)
+
+model, color, year, owner_list = honda_from_file
+
+print(model)
+print(color)
+print(year)
+for owner in owner_list:
+    owner_number, owner_name = owner
+    print(owner_number, owner_name)
+
+print('------------------')
+
+models = ['civic', 'accorf', 'pilot']
+owners = ['James Brown', 'Jane White', 'Jake Green']
+
+with open('honda.pickle', 'wb') as honda_file:
+    pickle.dumb(honda, honda_file)
+    pickle.dumb(models, honda_file)
+    pickle.dumb(owners, honda_file)
+    pickle.dump(999999999, honda_file)
+
+with open('honda.pickle', 'rb') as honda_retr:
+    honda_from_file = pickle.load(honda_retr)
+    models = pickle.load(honda_retr)
+    owners = pickle.load(honda_retr)
+    a = pickle.load(honda_retr)
+
+print(honda_from_file)
+print(models)
+print(owners)
+print(a)
