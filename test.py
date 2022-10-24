@@ -678,13 +678,13 @@ for owner in owner_list:
 
 print('------------------')
 
-models = ['civic', 'accorf', 'pilot']
+models = ['civic', 'accord', 'pilot']
 owners = ['James Brown', 'Jane White', 'Jake Green']
 
 with open('honda.pickle', 'wb') as honda_file:
-    pickle.dumb(honda, honda_file)
-    pickle.dumb(models, honda_file)
-    pickle.dumb(owners, honda_file)
+    pickle.dump(honda, honda_file)
+    pickle.dump(models, honda_file)
+    pickle.dump(owners, honda_file)
     pickle.dump(999999999, honda_file)
 
 with open('honda.pickle', 'rb') as honda_retr:
@@ -697,3 +697,85 @@ print(honda_from_file)
 print(models)
 print(owners)
 print(a)
+
+
+##################################
+#55. Модуль shelve
+#################################
+print(termcolor.colored('\n55. Модуль shelve', 'red'))
+
+import shelve
+
+with shelve.open('shelve_test') as cars:
+    cars['opel'] = 'Germany'
+    cars['ford'] = 'USA'
+    cars['mazda'] = 'Japan'
+    cars['renault'] = 'France'
+
+    print(cars['ford'])
+    print(cars['renault'])
+    print(cars['opel'])
+
+    for key in cars:
+        print(key)
+
+
+##################################
+#56. Работа с данными при помощи модуля shelve
+#################################
+print(termcolor.colored('\n56. Работа с данными при помощи модуля shelve', 'red'))
+
+
+with shelve.open('shelve_test') as cars:
+    cars['opel'] = 'Germany'
+    cars['ford'] = 'USA'
+    cars['mazda'] = 'Japan'
+    cars['renault'] = 'France'
+
+    print(cars['ford'])
+    print(cars['renault'])
+    print(cars['opel'])
+    print(cars.get('ope'))
+
+    cars['kia'] = 'Korea'
+
+    for key in cars:
+        print(key + ': ' + cars[key])
+
+    # while True:
+    #     key = input('Please enter a car name: ')
+    #     if key == 'quit':
+    #         break
+    #     country = cars.get(key, 'We don\'t have a ' + key)
+    #     print(country)
+
+    # while True:
+    #     key = input('Please enter a car name: ')
+    #     if key == 'quit':
+    #         break
+    #     if key in cars:
+    #         country = cars[key]
+    #         print(country)
+    #     else:
+    #         print('We don\'t have a ' + key)
+
+    print('+++')
+    ordered_key_list = list(cars.keys())
+    ordered_key_list.sort() #сортировка
+    for key in ordered_key_list:
+        print(key + ' ' + cars[key])
+
+    for value in cars.values():
+        print(value)
+    print(cars.values())
+    print(type(cars.values()))
+
+    for key in cars.keys():
+        print(key)
+    print(cars.keys())
+    print(type(cars.keys()))
+
+    for item in cars.items():
+        print(item)
+    print(cars.items())
+    print(type(cars.items()))
