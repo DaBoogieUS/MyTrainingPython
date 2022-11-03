@@ -1,4 +1,3 @@
-########################################
 # 36. MAP, FILTER and Lamda Expressions
 ########################################
 
@@ -779,3 +778,76 @@ with shelve.open('shelve_test') as cars:
         print(item)
     print(cars.items())
     print(type(cars.items()))
+
+
+##################################
+#57. Обновление данных при помощи модуля shelve
+#################################
+print(termcolor.colored('\n57. Обновление данных при помощи модуля shelve', 'red'))
+
+
+import shelve
+
+# monday_schedule = ['Math', 'English', 'System programming', 'Python']
+# tuesday_schedule = ['English', 'HTML', 'Python', 'Football', 'Physic']
+# wensday_schedule = ['Physic', 'English', 'Python', '', '', 'Math']
+# thursday_schedule = ['Math', 'Chemistry', 'Java', '', 'Football', '']
+# friday_schedule = ['Running', 'Math', 'Python', 'Java', 'HTML', 'Physic']
+
+with shelve.open('schedules', writeback=True) as schedules:
+    # schedules['monday_schedule'] = monday_schedule
+    # schedules['tuesday_schedule'] = tuesday_schedule
+    # schedules['wensday_schedule'] = wensday_schedule
+    # schedules['thursday_schedule'] = thursday_schedule
+    # schedules['friday_schedule'] = friday_schedule
+
+    # Вот так добавление нового значения не сработает
+    # schedules['thursday_schedule'].append('Swimming')
+
+    # Споcоб 1. Так можно добавить новое значение в нашу базу данных shelve
+    temp_list = schedules['thursday_schedule']
+    schedules['thursday_schedule'] = temp_list
+
+    # Споcоб 2. Так можно добавить новое значение в нашу базу данных shelve
+    # надо добавить предварительно в with shelve.open параметр writeback=True
+    schedules['thursday_schedule'].append('Python')
+
+
+    for key in schedules:
+        print(key, schedules[key])
+
+
+
+##################################
+#58. Конвертация словаря в объект shelve
+#################################
+print(termcolor.colored('\n58. Конвертация словаря в объект shelve', 'red'))
+
+university = shelve.open('university_file')
+
+# university['schedules'] = {
+#         'monday_schedule': ['Math', 'English', 'System programming', 'Python'],
+#         'tuesday_schedule': ['English', 'HTML', 'Python', 'Football', 'Physic'],
+#         'wensday_schedule': ['Physic', 'English', 'Python',  'Math'],
+#         'thursday_schedule': ['Math', 'Chemistry', 'Java', 'Football'],
+#         'friday_schedule': ['Running', 'Math', 'Python', 'Java', 'HTML', 'Physic']
+#     }
+# university['tutors'] = {
+#         'Math': ['Jack White', 'Jim Bim'],
+#         'Python': ['Gosha Kucenco', 'Jane Smith']
+#     }
+
+
+print(university['schedules']['wensday_schedule'])
+print(university['tutors']['Math'])
+
+university.close()
+
+
+
+##################################
+#59. Типы ошибок
+#################################
+print(termcolor.colored('\n59. Типы ошибок', 'red'))
+
+
