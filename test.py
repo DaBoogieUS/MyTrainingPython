@@ -850,4 +850,161 @@ university.close()
 #################################
 print(termcolor.colored('\n59. Типы ошибок', 'red'))
 
+# 1. SyntaxError
+# des function_1():
+#     x = 1 + 1
+#     print(x)
+
+# 2. NameError
+# print(xyyd45t)
+
+# 3. TypeError
+#print(len(1))
+# my_list = [1, 2, 3]
+# print(my_list + 'hello')
+
+# 4. IndexError
+# my_list = [1, 2, 3]
+# print(my_list[3])
+#print('Hello'[5])
+
+# 5. ValueError
+#print(int('hi'))
+
+# 6. KeyError
+# my_dict = {'first': 'apple', 'second': 'orange'}
+# print(my_dict['third'])
+
+# 7. AttributeError
+# print('red'.attr())
+
+
+##################################
+#60. Вызов ошибок
+#################################
+print(termcolor.colored('\n60. Вызов ошибок', 'red'))
+
+# raise ValueError('Invalid value')
+# print(int('hi'))
+
+
+def get_rainbow_color(color_number):
+    '''
+    :param color_number: Parametr color number must be integer type
+    and Parametr color number mut be in range of integer from 1 to 7
+    :return:
+    '''
+
+
+    color_number_list = [1,2,3,4,5,6,7]
+
+    if type(color_number) is not int:
+        raise TypeError('Parametr color number must be integer type')
+    if color_number not in color_number_list:
+        raise ValueError('Parametr color number mut be in range of integer from 1 to 7')
+
+
+    if color_number == 1:
+        return 'red'
+    elif color_number == 2:
+        return 'orange'
+    elif color_number == 3:
+        return 'yellow'
+    elif color_number == 4:
+        return 'green'
+    elif color_number == 5:
+        return 'blue'
+    elif color_number == 6:
+        return 'indigo'
+    elif color_number == 7:
+        return 'voilet'
+
+color = get_rainbow_color(2)
+print(color)
+
+
+
+##################################
+# 61. try except
+#################################
+print(termcolor.colored('\n61. try except', 'red'))
+
+print('some code')
+try:
+    print(len(23))
+    print(madfgh445)
+except NameError:
+    print('NameError is happen')
+except TypeError:
+    print('TypeError is happen')
+
+print('after error')
+
+user_dictionary = {'first_name': 'Jack', 'last_name': 'White', 'age': 24}
+
+# print(user_dictionary['name'])
+#print(user_dictionary.get['name'])
+
+def get_dictionay_value(dictionary, key):
+    try:
+        return dictionary[key]
+    except KeyError:
+        return None
+
+print(get_dictionay_value(user_dictionary, 'age'))
+print(get_dictionay_value(user_dictionary, 'fdf'))
+print(get_dictionay_value(user_dictionary, 'gfhgfhfgh'))
+
+
+##################################
+# 62. else finally
+#################################
+print(termcolor.colored('\n62. else finally', 'red'))
+
+# if we have an error - "except" fires and "else" doesn't fire
+# if we haven't an error - "except" doesn't fires and "else" fire
+# Finally block fires anyway
+
+# while True:
+#     try:
+#         number = int(input('Enter some number'))
+#         print(number / 2)
+#     except:
+#         print('You have to enter a number!')
+#     else:
+#         print('Good Job! This is a number')
+#         break;
+#     finally:
+#         print('Finally block')
+#
+# print('Code after error handling')
+
+
+def divide(x, y):
+    try:
+        print(x / y)
+    except ZeroDivisionError as e:
+        print('You can\'t divide by zero')
+        print(e)
+    except TypeError as e:
+        print('x and y must be numbers')
+        print(e)
+    else:
+        print ('x was divided by y')
+
+divide(4, 0)
+
+
+##################################
+# 63. Iterable & iterator
+#################################
+print(termcolor.colored('\n63. Iterable & iterator', 'red'))
+# iterate - перебирать
+
+number_list = [1, 2, 3, 4, 5, 6, 7, 8]
+
+for number in number_list:
+    print(number)
+
+
 
