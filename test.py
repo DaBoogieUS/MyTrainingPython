@@ -1001,10 +1001,334 @@ divide(4, 0)
 print(termcolor.colored('\n63. Iterable & iterator', 'red'))
 # iterate - перебирать
 
+# Iterables objects  те объекты элементы которых можно перебирать
+
+
+
 number_list = [1, 2, 3, 4, 5, 6, 7, 8]
 
 for number in number_list:
     print(number)
 
 
+for letter in 'my string':
+    print(letter)
 
+# Iterators
+
+number_list_iterator = iter(number_list)
+print(type(number_list_iterator))  # class = list_iterator
+string_iterator = iter('my string')
+print(type(string_iterator))  # class = str_iterator
+
+# print(number_list_iterator.__next__())
+# print(number_list_iterator.__next__())
+# print(number_list_iterator.__next__())
+# print(number_list_iterator.__next__())
+# print(string_iterator.__next__())
+# print(string_iterator.__next__())
+# print(string_iterator.__next__())
+# print(string_iterator.__next__())
+# print(next(number_list_iterator))
+# print(next(number_list_iterator))
+
+def my_for_loop(iterable):
+    iterator = iter(iterable)
+    while True:
+        try:
+            print(iterator.__next__())
+        except StopIteration:
+            print('Iteration is finished')
+            break
+
+my_for_loop('hello')
+
+
+##################################
+# 64. Custom iterable
+#################################
+print(termcolor.colored('\n64. Custom iterable', 'red'))
+
+for number in range(1, 10):
+    print(number)
+
+print('############')
+class MyRange:
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+        self.current = start
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.current < self.end:
+            number = self.current
+            self.current += 1
+            return number
+        raise StopIteration
+
+first_range = MyRange(6, 15)
+for number in first_range:
+    print(number)
+
+
+##################################
+# 65. Generator functions
+#################################
+print(termcolor.colored('\n64. Custom iterable', 'red'))
+
+# Generators are iterators
+# Generators can be created with generator function
+# Generators can be created with generator expressions
+
+def my_function(x):
+    return x
+
+print(my_function(5))
+
+
+def count_up_to(x):
+    count = 1
+    while count <= x:
+        yield count
+        count +=1
+
+
+# print(count_up_to(4))
+counter = count_up_to(10)
+# print(counter.__next__())
+
+counter.__next__()
+
+for number in counter:
+    print(number)
+
+# САМОСТОЯТЕЛЬНАЯ РАБОТА
+# def get_week_day():
+#     week_days = [
+#         'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+#     ]
+#     for day in week_days:
+#         yield day
+#
+# current_day = get_week_day()
+# print(current_day.__next__())
+# print(current_day.__next__())
+# print(current_day.__next__())
+# print(current_day.__next__())
+
+print('----------65-----------')
+
+def even_odd_generator():
+    values = ['even', 'odd']
+
+    while True:
+        for val in values:
+            yield val
+
+even_odd = even_odd_generator()
+print(even_odd.__next__())
+print(even_odd.__next__())
+print(even_odd.__next__())
+print(even_odd.__next__())
+
+
+
+##################################
+# 66. Бесконечные генераторы
+#################################
+print(termcolor.colored('\n66. Бесконечные генераторы', 'red'))
+# Infinite process
+
+
+# при маштабировании такой подход не очень ресурсоемкий
+# def create_patterns():
+#     max_patterns_number = 100
+#     patterns = ('First pattern', 'Second pattern', 'Third pattern', 'Forht pattern')
+#     i = 0
+#     result_list = []
+#     while len(result_list) < max_patterns_number:
+#         if i >= len(patterns):
+#             i = 0
+#         result_list.append(patterns[i])
+#         i += 1
+#     return result_list
+#
+# print(create_patterns())
+
+
+# генератор использовать лучше
+print('----------66-----------')
+
+def get_current_pattern():
+    patterns = ('First pattern', 'Second pattern', 'Third pattern', 'Forht pattern')
+    i = 0
+    while True:
+        if i >= len(patterns):
+            i = 0
+        yield patterns[i]
+        i += 1
+
+
+current_pattern = get_current_pattern()
+
+print(current_pattern.__next__())
+
+# Создайте функцию, возвращающую генератор, бесконечно вырабатывающий квадраты целых чисел, начиная с 1.
+# infinite_square_generator = get_infinite_square_generator()
+# print(next(infinite_square_generator)) # 1
+# print(next(infinite_square_generator)) # 4
+# print(next(infinite_square_generator)) # 9
+# print(next(infinite_square_generator)) # 16
+
+def x2():
+    i = 1
+    while True:
+        yield i * i
+        i += 1
+
+
+current = x2()
+print(current.__next__())
+print(current.__next__())
+print(current.__next__())
+
+
+##################################
+# 67. Generator expressions
+#################################
+print(termcolor.colored('\n67. Generator expressions', 'red'))
+
+def get_number_from_range():
+    for number in range(5):
+        yield number
+
+counter = get_number_from_range()
+print(counter) # <generator object get_number_from_range at 0x000001C7F371B060>
+
+counter1 = (number for number in range(10))
+print(counter1) # <generator object <genexpr> at 0x000001C7F371AEA0>
+
+print(sum([number for number in range(10)])) # сначало создается весь список, в сучае большого списка будет большая нагрузка
+print(sum(number for number in range(10))) # получается один элемент из этого генератора в один момент времени, короче этот способ более ьыстрый
+
+import time
+
+# list_start_time = time.time()
+# print(sum([number for number in range(100000000)])) # сначало создается весь список, в сучае большого списка будет большая нагрузка
+# list_time = time.time() - list_start_time
+#
+# gen_start_time = time.time()
+# print(sum(number for number in range(100000000))) # получается один элемент из этого генератора в один момент времени, короче этот способ более ьыстрый
+# gen_time = time.time() - gen_start_time
+#
+# print(f'time fo LIST is {list_time}')
+# print(f'time fo GEN is {gen_time}')
+
+
+##################################
+# 68. Higher order functions which accept another function as arguments
+#################################
+print(termcolor.colored('\n68. Higher order functions', 'red'))
+
+def product(n, func):
+    result = 1
+    for number in range(1, n):
+        result *= func(number)
+    return result
+
+def square(x):
+    return x * x
+
+def cube(x):
+    return x * x * x
+
+print(product(4, cube))
+print(product(4, square))
+
+def my_function(a, b, func):
+    result = func([a, b])
+    return result
+
+print(my_function(7, 3, sum))
+
+from random import choice
+def colorize(thing):
+    def get_color():
+        colors = ('red', 'green', 'blue', 'shet')
+        color = choice(colors)
+        return color
+    result = get_color() + ' ' + thing
+    return result
+
+print(colorize('apple'))
+
+
+# Inner function can access outer function scope
+def colorize1(thing):
+    def get_color():
+        colors = ('red', 'green', 'blue', 'shet')
+        color = choice(colors)
+        return color + ' ' + thing
+    return get_color
+
+print(colorize1('apple')())
+
+colorized_dog = colorize1('dog')
+print(colorized_dog())
+
+##################################
+# 69. Знакомство с декораторами
+#################################
+print(termcolor.colored('\n69. Знакомство с декораторами', 'red'))
+
+#
+# def simple_function():
+#     print('Simple function')
+#
+# print(simple_function())
+#
+# print("dfdsfsdfds")
+#
+# def decatator_function(original_function):
+#     def wrap_function():
+#         print('Some code before the old function')
+#         original_function()
+#         print('Some code after the old function')
+#     return wrap_function()
+#
+# decatator_function = decatator_function(simple_function)
+#
+# @decatator_function
+# def simple_function():
+#     print('Simple function')
+#
+# print(simple_function())
+
+def make_compliment(func):
+    def wrapper(*args, **kwargs):
+        print('Nice to met you!')
+        func(*args, **kwargs)
+        print('You look great!')
+    return wrapper
+
+@make_compliment
+def ask_name():
+    print('What is your name?')
+
+ask_name()
+
+@make_compliment
+def say_name(name):
+    print('My name is ' + name)
+
+say_name('Jack')
+
+@make_compliment
+def order(food, drink):
+    print(f'Give me {food} and {drink}')
+
+
+order('chips', drink='kola')
